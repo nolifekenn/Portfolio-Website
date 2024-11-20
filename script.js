@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
+function initializeApp() {
+  // Initialize Feather icons
   feather.replace();
   
   // Smooth scroll function
@@ -22,6 +23,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
     requestAnimationFrame(animation);
   }
+
+  // Mobile menu functionality
+  const burgerMenu = document.querySelector(".burger-menu");
+  const burgerIcon = document.querySelector(".burger-icon");
+  const navLinks = document.querySelector(".nav-links");
+
+  if (burgerMenu) {
+    burgerMenu.addEventListener("click", function(e) {
+      e.stopPropagation();
+      burgerIcon.classList.toggle("active");
+      navLinks.classList.toggle("active");
+    });
+  }
+
+  // Close menu when clicking outside
+  document.addEventListener("click", function(e) {
+    if (!navLinks.contains(e.target) && !burgerMenu.contains(e.target)) {
+      burgerIcon.classList.remove("active");
+      navLinks.classList.remove("active");
+    }
+  });
 
   // Navigation links
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -62,19 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
   backToTop.addEventListener("click", function (e) {
     e.preventDefault();
     smoothScroll(0);
-  });
-
-  document.querySelector(".burger-menu").addEventListener("click", function () {
-    this.querySelector(".burger-icon").classList.toggle("active");
-    document.querySelector(".nav-links").classList.toggle("active");
-  });
-
-  // Close menu when clicking a link
-  document.querySelectorAll(".nav-links a").forEach((link) => {
-    link.addEventListener("click", () => {
-      document.querySelector(".burger-icon").classList.remove("active");
-      document.querySelector(".nav-links").classList.remove("active");
-    });
   });
 
   // Update the scroll event listener
@@ -167,5 +176,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Place clouds when page loads
-  document.addEventListener('DOMContentLoaded', placeClouds());
-});
+  placeClouds();
+
+  if ('ontouchstart' in window) {
+    document.body.addEventListener('touchstart', function(e) {
+      if (!navLinks.contains(e.target) && !burgerMenu.contains(e.target)) {
+        burgerIcon.classList.remove("active");
+        navLinks.classList.remove("active");
+      }
+    });
+  }
+}
+
+// Single DOMContentLoaded event listener
+document.addEventListener("DOMContentLoaded", initializeApp);
