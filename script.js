@@ -1,6 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
-  feather.replace();
+  // Remove this line from the top
+  // feather.replace();
   
+  // Add this function to initialize all icons
+  function initializeIcons() {
+    // Initialize Feather icons
+    feather.replace();
+    
+    // Add any specific styling for Simple Icons if needed
+    document.querySelectorAll('.si').forEach(icon => {
+      icon.style.width = '24px';
+      icon.style.height = '24px';
+    });
+  }
+
+  // Call the initialization function after a small delay to ensure DOM is ready
+  setTimeout(initializeIcons, 100);
+
   // Smooth scroll function
   function smoothScroll(targetPosition) {
     const startPosition = window.scrollY;
