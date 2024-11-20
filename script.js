@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+  feather.replace();
+  
   // Smooth scroll function
   function smoothScroll(targetPosition) {
     const startPosition = window.scrollY;
